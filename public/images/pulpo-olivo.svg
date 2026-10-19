@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <radialGradient id="bgOlivo" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#1E1624" />
+      <stop offset="100%" stop-color="#0A0A0C" />
+    </radialGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bgOlivo)" />
+  <rect x="90" y="150" width="620" height="300" rx="20" fill="#141418" stroke="#A855F7" stroke-opacity="0.3" stroke-width="2" />
+
+  <!-- Botija Olive Cream Swirl -->
+  <path d="M150,395 Q400,360 650,395" fill="none" stroke="#7E22CE" stroke-width="16" stroke-linecap="round" opacity="0.55" />
+
+  <!-- Pulpo al Olivo Rolls -->
+  <g transform="translate(215, 290)">
+    <circle cx="0" cy="0" r="46" fill="#F8FAFC" stroke="#18181B" stroke-width="4" />
+    <path d="M-44,-10 A46,46 0 0,1 44,-10 Z" fill="#6B21A8" />
+    <circle cx="-10" cy="8" r="12" fill="#4ADE80" />
+    <circle cx="12" cy="8" r="12" fill="#F1F5F9" />
+    <circle cx="0" cy="-22" r="7" fill="#D8B4FE" />
+  </g>
+  <g transform="translate(338, 290)">
+    <circle cx="0" cy="0" r="46" fill="#F8FAFC" stroke="#18181B" stroke-width="4" />
+    <path d="M-44,-10 A46,46 0 0,1 44,-10 Z" fill="#6B21A8" />
+    <circle cx="-10" cy="8" r="12" fill="#4ADE80" />
+    <circle cx="12" cy="8" r="12" fill="#F1F5F9" />
+    <circle cx="0" cy="-22" r="7" fill="#D8B4FE" />
+  </g>
+  <g transform="translate(462, 290)">
+    <circle cx="0" cy="0" r="46" fill="#F8FAFC" stroke="#18181B" stroke-width="4" />
+    <path d="M-44,-10 A46,46 0 0,1 44,-10 Z" fill="#6B21A8" />
+    <circle cx="-10" cy="8" r="12" fill="#4ADE80" />
+    <circle cx="12" cy="8" r="12" fill="#F1F5F9" />
+    <circle cx="0" cy="-22" r="7" fill="#D8B4FE" />
+  </g>
+  <g transform="translate(585, 290)">
+    <circle cx="0" cy="0" r="46" fill="#F8FAFC" stroke="#18181B" stroke-width="4" />
+    <path d="M-44,-10 A46,46 0 0,1 44,-10 Z" fill="#6B21A8" />
+    <circle cx="-10" cy="8" r="12" fill="#4ADE80" />
+    <circle cx="12" cy="8" r="12" fill="#F1F5F9" />
+    <circle cx="0" cy="-22" r="7" fill="#D8B4FE" />
+  </g>
+</svg>

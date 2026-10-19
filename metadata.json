@@ -1,0 +1,6 @@
+{
+  "name": "Nizumi Sushi – Cocina Nikkei & Fusión",
+  "description": "Alta cocina japonesa-peruana en el corazón de Puno. Tablas de makis de autor, ramen artesanal y pedidos directos por WhatsApp en Jr. Lima 439, 2do Piso.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

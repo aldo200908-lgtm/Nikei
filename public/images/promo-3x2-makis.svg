@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <radialGradient id="bg3x2" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#1F1619" />
+      <stop offset="100%" stop-color="#0B0C0E" />
+    </radialGradient>
+    <linearGradient id="boardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#27272A" />
+      <stop offset="100%" stop-color="#121316" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg3x2)" />
+  <rect x="75" y="95" width="650" height="410" rx="18" fill="url(#boardGrad)" stroke="#D4AF37" stroke-opacity="0.3" stroke-width="2" />
+  <line x1="115" y1="135" x2="685" y2="135" stroke="#ffffff" stroke-opacity="0.06" />
+  <line x1="115" y1="465" x2="685" y2="465" stroke="#ffffff" stroke-opacity="0.06" />
+
+  <!-- Row 1: Acevichado Roll (Golden Aji Sauce) -->
+  <g transform="translate(175, 210)">
+    <circle cx="0" cy="0" r="38" fill="#18181B" stroke="#D4AF37" stroke-width="2" />
+    <circle cx="0" cy="0" r="30" fill="#F8FAFC" />
+    <circle cx="-6" cy="-4" r="11" fill="#F59E0B" />
+    <circle cx="9" cy="6" r="9" fill="#22C55E" />
+    <path d="M-22,-8 Q0,-26 22,-6" fill="none" stroke="#FACC15" stroke-width="5" stroke-linecap="round" />
+  </g>
+  <g transform="translate(285, 210)">
+    <circle cx="0" cy="0" r="38" fill="#18181B" stroke="#D4AF37" stroke-width="2" />
+    <circle cx="0" cy="0" r="30" fill="#F8FAFC" />
+    <circle cx="-6" cy="-4" r="11" fill="#F59E0B" />
+    <circle cx="9" cy="6" r="9" fill="#22C55E" />
+    <path d="M-22,-8 Q0,-26 22,-6" fill="none" stroke="#FACC15" stroke-width="5" stroke-linecap="round" />
+  </g>
+  <g transform="translate(395, 210)">
+    <circle cx="0" cy="0" r="38" fill="#18181B" stroke="#D4AF37" stroke-width="2" />
+    <circle cx="0" cy="0" r="30" fill="#F8FAFC" />
+    <circle cx="-6" cy="-4" r="11" fill="#F59E0B" />
+    <circle cx="9" cy="6" r="9" fill="#22C55E" />
+    <path d="M-22,-8 Q0,-26 22,-6" fill="none" stroke="#FACC15" stroke-width="5" stroke-linecap="round" />
+  </g>
+
+  <!-- Row 2: Furai Crispy Roll (Crimson & Tare) -->
+  <g transform="translate(230, 305)">
+    <circle cx="0" cy="0" r="40" fill="#B45309" stroke="#F59E0B" stroke-width="3" stroke-dasharray="6 3" />
+    <circle cx="0" cy="0" r="29" fill="#F8FAFC" />
+    <circle cx="-5" cy="-3" r="11" fill="#E11D48" />
+    <circle cx="8" cy="5" r="8" fill="#4ADE80" />
+  </g>
+  <g transform="translate(345, 305)">
+    <circle cx="0" cy="0" r="40" fill="#B45309" stroke="#F59E0B" stroke-width="3" stroke-dasharray="6 3" />
+    <circle cx="0" cy="0" r="29" fill="#F8FAFC" />
+    <circle cx="-5" cy="-3" r="11" fill="#E11D48" />
+    <circle cx="8" cy="5" r="8" fill="#4ADE80" />
+  </g>
+  <g transform="translate(460, 305)">
+    <circle cx="0" cy="0" r="40" fill="#B45309" stroke="#F59E0B" stroke-width="3" stroke-dasharray="6 3" />
+    <circle cx="0" cy="0" r="29" fill="#F8FAFC" />
+    <circle cx="-5" cy="-3" r="11" fill="#E11D48" />
+    <circle cx="8" cy="5" r="8" fill="#4ADE80" />
+  </g>
+
+  <!-- Row 3: Avocado & Lomo Roll -->
+  <g transform="translate(300, 400)">
+    <circle cx="0" cy="0" r="38" fill="#15803D" stroke="#4ADE80" stroke-width="2.5" />
+    <circle cx="0" cy="0" r="28" fill="#F8FAFC" />
+    <circle cx="0" cy="0" r="13" fill="#991B1B" />
+  </g>
+  <g transform="translate(410, 400)">
+    <circle cx="0" cy="0" r="38" fill="#15803D" stroke="#4ADE80" stroke-width="2.5" />
+    <circle cx="0" cy="0" r="28" fill="#F8FAFC" />
+    <circle cx="0" cy="0" r="13" fill="#991B1B" />
+  </g>
+  <g transform="translate(520, 400)">
+    <circle cx="0" cy="0" r="38" fill="#15803D" stroke="#4ADE80" stroke-width="2.5" />
+    <circle cx="0" cy="0" r="28" fill="#F8FAFC" />
+    <circle cx="0" cy="0" r="13" fill="#991B1B" />
+  </g>
+
+  <!-- Soy sauce dish -->
+  <circle cx="615" cy="230" r="46" fill="#18181B" stroke="#D4AF37" stroke-width="2" />
+  <circle cx="615" cy="230" r="33" fill="#27090E" />
+  <circle cx="605" cy="222" r="4" fill="#F8FAFC" opacity="0.4" />
+</svg>

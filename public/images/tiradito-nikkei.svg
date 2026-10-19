@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <radialGradient id="bgTira" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#241E11" />
+      <stop offset="100%" stop-color="#0A0A0C" />
+    </radialGradient>
+    <radialGradient id="ajiPool" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FACC15" />
+      <stop offset="75%" stop-color="#EAB308" />
+      <stop offset="100%" stop-color="#CA8A04" />
+    </radialGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bgTira)" />
+
+  <!-- Matte Black Plate -->
+  <circle cx="400" cy="300" r="230" fill="#121316" stroke="#27272A" stroke-width="5" />
+  <!-- Golden Aji Amarillo Citrus Emulsion Mirror -->
+  <circle cx="400" cy="300" r="185" fill="url(#ajiPool)" />
+
+  <!-- Delicate White Fish Tiradito Sashimi Cuts -->
+  <g fill="#FFFBEB" stroke="#FDE68A" stroke-width="2" opacity="0.95">
+    <path d="M275,250 Q335,220 395,255 Q340,285 275,250 Z" />
+    <path d="M315,285 Q375,255 435,290 Q380,320 315,285 Z" />
+    <path d="M355,320 Q415,290 475,325 Q420,355 355,320 Z" />
+    <path d="M395,355 Q455,325 515,360 Q460,390 395,355 Z" />
+  </g>
+
+  <!-- Crispy Andean Cancha Chullpi & Micro-Cilantro -->
+  <g fill="#92400E">
+    <circle cx="290" cy="340" r="8" />
+    <circle cx="310" cy="355" r="7" />
+    <circle cx="285" cy="365" r="7.5" />
+    <circle cx="490" cy="245" r="8" />
+    <circle cx="510" cy="260" r="7" />
+  </g>
+  <g fill="#15803D">
+    <circle cx="350" cy="255" r="6" />
+    <circle cx="405" cy="295" r="6" />
+    <circle cx="455" cy="335" r="6" />
+  </g>
+  <g fill="#E11D48">
+    <circle cx="375" cy="275" r="4" />
+    <circle cx="430" cy="315" r="4" />
+  </g>
+</svg>

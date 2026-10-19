@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900">
+  <defs>
+    <radialGradient id="bgGlow" cx="65%" cy="45%" r="60%">
+      <stop offset="0%" stop-color="#1F191C" />
+      <stop offset="50%" stop-color="#111215" />
+      <stop offset="100%" stop-color="#0A0A0C" />
+    </radialGradient>
+    <linearGradient id="slatePlate" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#23252A" />
+      <stop offset="50%" stop-color="#15171B" />
+      <stop offset="100%" stop-color="#0D0E11" />
+    </linearGradient>
+    <radialGradient id="ajiGold" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#F59E0B" />
+      <stop offset="70%" stop-color="#D4AF37" />
+      <stop offset="100%" stop-color="#92400E" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="tunaRed" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#FB7185" />
+      <stop offset="50%" stop-color="#E11D48" />
+      <stop offset="100%" stop-color="#881337" />
+    </radialGradient>
+    <radialGradient id="salmonGrad" cx="40%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#FDBA74" />
+      <stop offset="55%" stop-color="#FB923C" />
+      <stop offset="100%" stop-color="#C2410C" />
+    </radialGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="24" stdDeviation="28" flood-color="#000000" flood-opacity="0.85" />
+    </filter>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bgGlow)" />
+
+  <!-- Subtle Japanese Kumiko / Slate Geometry lines -->
+  <g stroke="#ffffff" stroke-opacity="0.04" stroke-width="1">
+    <line x1="0" y1="220" x2="1600" y2="220" />
+    <line x1="0" y1="680" x2="1600" y2="680" />
+    <line x1="920" y1="0" x2="920" y2="900" />
+    <circle cx="1140" cy="440" r="340" fill="none" stroke="#D4AF37" stroke-opacity="0.12" stroke-width="1.5" />
+    <circle cx="1140" cy="440" r="285" fill="none" stroke="#E11D48" stroke-opacity="0.1" stroke-width="1" />
+  </g>
+
+  <!-- Volcanic Slate Platter -->
+  <g filter="url(#softShadow)">
+    <path d="M720,310 L1430,220 L1490,590 L780,670 Z" fill="url(#slatePlate)" stroke="#2E323B" stroke-width="2" />
+    <path d="M735,322 L1415,235 L1472,575 L792,652 Z" fill="none" stroke="#D4AF37" stroke-opacity="0.18" stroke-width="1" />
+  </g>
+
+  <!-- Aji Amarillo & Tare Sauce Brushstroke -->
+  <path d="M810,560 Q1050,490 1380,520 Q1210,565 830,590 Z" fill="url(#ajiGold)" opacity="0.65" />
+  <circle cx="860" cy="375" r="14" fill="#D4AF37" opacity="0.8" />
+  <circle cx="895" cy="365" r="8" fill="#E11D48" opacity="0.85" />
+  <circle cx="1390" cy="470" r="11" fill="#D4AF37" opacity="0.75" />
+
+  <!-- 5 Hero Nikkei Maki Pieces in Perspective -->
+  <g filter="url(#softShadow)">
+    <!-- Piece 1 -->
+    <g transform="translate(880, 465)">
+      <ellipse cx="0" cy="28" rx="56" ry="34" fill="#18181B" />
+      <rect x="-56" y="-22" width="112" height="50" fill="#18181B" />
+      <ellipse cx="0" cy="-22" rx="56" ry="34" fill="#F8FAFC" stroke="#27272A" stroke-width="4" />
+      <ellipse cx="0" cy="-25" rx="44" ry="25" fill="url(#tunaRed)" />
+      <circle cx="-12" cy="-26" r="10" fill="#F59E0B" />
+      <circle cx="14" cy="-22" r="9" fill="#4ADE80" />
+      <path d="M-32,-30 Q0,-48 34,-26" fill="none" stroke="#FEF08A" stroke-width="4" stroke-linecap="round" />
+    </g>
+
+    <!-- Piece 2 -->
+    <g transform="translate(1015, 440)">
+      <ellipse cx="0" cy="28" rx="58" ry="35" fill="#18181B" />
+      <rect x="-58" y="-24" width="116" height="52" fill="#18181B" />
+      <ellipse cx="0" cy="-24" rx="58" ry="35" fill="#F8FAFC" stroke="#27272A" stroke-width="4" />
+      <ellipse cx="0" cy="-27" rx="46" ry="26" fill="url(#salmonGrad)" />
+      <circle cx="-10" cy="-26" r="11" fill="#FDE047" />
+      <circle cx="15" cy="-24" r="9" fill="#22C55E" />
+      <path d="M-35,-32 Q0,-50 35,-28" fill="none" stroke="#D4AF37" stroke-width="4" stroke-linecap="round" />
+    </g>
+
+    <!-- Piece 3 (Centerpiece crowned with gold leaf & tobiko) -->
+    <g transform="translate(1155, 415)">
+      <ellipse cx="0" cy="30" rx="62" ry="38" fill="#18181B" />
+      <rect x="-62" y="-26" width="124" height="56" fill="#18181B" />
+      <ellipse cx="0" cy="-26" rx="62" ry="38" fill="#F8FAFC" stroke="#27272A" stroke-width="4" />
+      <ellipse cx="0" cy="-30" rx="50" ry="28" fill="url(#tunaRed)" />
+      <circle cx="-14" cy="-30" r="11" fill="#FACC15" />
+      <circle cx="14" cy="-28" r="10" fill="#4ADE80" />
+      <polygon points="-8,-46 6,-52 14,-38 -2,-36" fill="#D4AF37" />
+      <circle cx="0" cy="-38" r="3" fill="#F8FAFC" />
+    </g>
+
+    <!-- Piece 4 -->
+    <g transform="translate(1295, 392)">
+      <ellipse cx="0" cy="28" rx="56" ry="34" fill="#18181B" />
+      <rect x="-56" y="-22" width="112" height="50" fill="#18181B" />
+      <ellipse cx="0" cy="-22" rx="56" ry="34" fill="#F8FAFC" stroke="#27272A" stroke-width="4" />
+      <ellipse cx="0" cy="-25" rx="44" ry="25" fill="url(#salmonGrad)" />
+      <circle cx="-12" cy="-24" r="10" fill="#FDE047" />
+      <circle cx="12" cy="-22" r="9" fill="#4ADE80" />
+      <path d="M-30,-28 Q0,-45 30,-24" fill="none" stroke="#FEF08A" stroke-width="3.5" stroke-linecap="round" />
+    </g>
+  </g>
+
+  <!-- Black & Bronze Hashi (Chopsticks) resting on slate -->
+  <g filter="url(#softShadow)">
+    <line x1="940" y1="680" x2="1490" y2="510" stroke="#1E1B18" stroke-width="10" stroke-linecap="round" />
+    <line x1="940" y1="680" x2="1120" y2="624" stroke="#D4AF37" stroke-width="10" stroke-linecap="round" />
+    <line x1="965" y1="705" x2="1505" y2="545" stroke="#1E1B18" stroke-width="10" stroke-linecap="round" />
+    <line x1="965" y1="705" x2="1145" y2="651" stroke="#D4AF37" stroke-width="10" stroke-linecap="round" />
+  </g>
+</svg>
