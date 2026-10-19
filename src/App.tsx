@@ -7,14 +7,18 @@ import { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
 import { MenuSection } from './components/MenuSection';
+import { MakiBuilderSection } from './components/MakiBuilderSection';
+import { LocationAndContactSection } from './components/LocationAndContactSection';
+import { Footer } from './components/Footer';
 import { DynamicCartBar } from './components/DynamicCartBar';
 import { CheckoutDrawer } from './components/CheckoutDrawer';
-import { CraftAndLocationSection } from './components/CraftAndLocationSection';
 import {
-  NIZUMI_MENU,
+  NIZUMI_MENU_DISHES,
   addToCart,
   updateCartItemQuantity,
   calculateCartSummary,
+  loadCartFromStorage,
+  saveCartToStorage,
   type MenuCategoryId,
   type MenuDish,
   type MakiFlavor,
@@ -25,7 +29,7 @@ import {
 export default function App() {
   const [selectedCategory, setSelectedCategory] =
     useState<MenuCategoryId>('all');
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const [cart, setCart] = useState<CartItem[]>(() => loadCartFromStorage());
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const [checkoutForm, setCheckoutForm] = useState<CheckoutFormState>({
@@ -34,6 +38,7 @@ export default function App() {
     modality: 'delivery',
     deliveryAddress: '',
     deliveryReference: '',
+    reservationDate: '',
     reservationTime: '20:00',
     reservationGuests: 2,
     chopsticksCount: 2,
@@ -43,37 +48,10 @@ export default function App() {
     notes: '',
   });
 
-  // Progressive Scroll Reveal using IntersectionObserver
+  // Persist cart to localStorage
   useEffect(() => {
-    const isHeadless =
-      navigator.webdriver || /HeadlessChrome/i.test(navigator.userAgent);
-    if (isHeadless || !('IntersectionObserver' in window)) {
-      return;
-    }
-
-    const elements = document.querySelectorAll('.reveal-item');
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.remove('reveal-pending');
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
-    );
-
-    elements.forEach((el) => {
-      const rect = el.getBoundingClientRect();
-      if (rect.top > window.innerHeight) {
-        el.classList.add('reveal-pending');
-        observer.observe(el);
-      }
-    });
-
-    return () => observer.disconnect();
-  }, [selectedCategory]);
+    saveCartToStorage(cart);
+  }, [cart]);
 
   const summary = calculateCartSummary(cart);
 
@@ -81,8 +59,15 @@ export default function App() {
     dish: MenuDish,
     options?: {
       selectedFlavors?: MakiFlavor[];
-      proteinChoice?: 'Cerdo Chashu' | 'Pollo Crocante';
+      proteinChoice?: 'Cerdo' | 'Pollo';
     }
+  ) => {
+    setCart((prevCart) => addToCart(prevCart, dish, options));
+  };
+
+  const handleAdd3x2Board = (
+    dish: MenuDish,
+    options: { selectedFlavors: MakiFlavor[] }
   ) => {
     setCart((prevCart) => addToCart(prevCart, dish, options));
   };
@@ -95,10 +80,10 @@ export default function App() {
     setCheckoutForm((prev) => ({ ...prev, ...patch }));
   };
 
-  const handleScrollToMenu = () => {
-    const target = document.getElementById('armador-3x2');
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth' });
+  const handleScrollToCarta = () => {
+    const el = document.getElementById('carta');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -107,39 +92,51 @@ export default function App() {
     setIsDrawerOpen(true);
   };
 
+  const handleOpenCart = () => {
+    setIsDrawerOpen(true);
+  };
+
   return (
-    <div className="min-h-screen bg-[#0A0A0C] text-[#F8FAFC] flex flex-col">
+    <div className="min-h-screen bg-[#0D0E11] text-[#F8FAFC] flex flex-col antialiased">
       <Navbar
         totalDishes={summary.totalDishes}
         formattedTotal={summary.formattedTotal}
-        onOpenCart={() => setIsDrawerOpen(true)}
+        onOpenCart={handleOpenCart}
       />
 
       <main className="flex-1">
-        <HeroSection
-          onExploreMenu={handleScrollToMenu}
-          onReserveTable={handleOpenReservationDrawer}
-        />
+        {/* 1. Hero con foto */}
+        <HeroSection onExploreMenu={handleScrollToCarta} />
 
+        {/* 2. Carta */}
         <MenuSection
-          dishes={NIZUMI_MENU}
+          dishes={NIZUMI_MENU_DISHES}
           selectedCategory={selectedCategory}
           onSelectCategory={setSelectedCategory}
-          onAddStandardDish={handleAddDish}
+          onAddDish={handleAddDish}
         />
 
-        <CraftAndLocationSection
+        {/* 3. Armador 3x2 */}
+        <MakiBuilderSection onAddBoard={handleAdd3x2Board} />
+
+        {/* 4. Local y contacto */}
+        <LocationAndContactSection
           onOpenReservation={handleOpenReservationDrawer}
         />
       </main>
 
+      {/* 5. Footer */}
+      <Footer />
+
+      {/* Dynamic Cart Bar: visible only on mobile when cart has items */}
       <DynamicCartBar
         totalPieces={summary.totalPieces}
         totalDishes={summary.totalDishes}
         formattedTotal={summary.formattedTotal}
-        onOpenDrawer={() => setIsDrawerOpen(true)}
+        onOpenDrawer={handleOpenCart}
       />
 
+      {/* Checkout and Reservation Drawer */}
       <CheckoutDrawer
         isOpen={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}

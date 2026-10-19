@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nizumi-sushi.vercel.app/sitemap.xml

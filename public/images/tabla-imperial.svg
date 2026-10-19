@@ -1,62 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
-  <defs>
-    <radialGradient id="bgImp" cx="50%" cy="45%" r="70%">
-      <stop offset="0%" stop-color="#221A13" />
-      <stop offset="100%" stop-color="#0A0A0C" />
-    </radialGradient>
-  </defs>
-  <rect width="800" height="600" fill="url(#bgImp)" />
-  <circle cx="400" cy="300" r="235" fill="#141519" stroke="#D4AF37" stroke-width="2.5" stroke-opacity="0.55" />
-  <circle cx="400" cy="300" r="205" fill="none" stroke="#E11D48" stroke-width="1" stroke-opacity="0.35" />
-
-  <!-- Flame-seared Nigiri & Imperial Makis arranged in radial symmetry -->
-  <g transform="translate(400, 300)">
-    <!-- Center Sashimi Rose -->
-    <circle cx="0" cy="0" r="54" fill="#1F2026" stroke="#D4AF37" stroke-width="1.5" />
-    <path d="M-28,-12 Q0,-40 28,-12 Q35,18 0,32 Q-35,18 -28,-12 Z" fill="#E11D48" />
-    <path d="M-16,-6 Q0,-24 16,-6 Q20,12 0,20 Q-20,12 -16,-6 Z" fill="#FB7185" />
-    <circle cx="0" cy="0" r="6" fill="#D4AF37" />
-
-    <!-- 8 Outer Imperial Pieces -->
-    <g transform="rotate(0) translate(0, -135)">
-      <rect x="-34" y="-20" width="68" height="40" rx="14" fill="#F8FAFC" />
-      <rect x="-36" y="-22" width="72" height="26" rx="10" fill="#FB923C" />
-      <line x1="-20" y1="-15" x2="20" y2="-5" stroke="#D4AF37" stroke-width="3" />
-    </g>
-    <g transform="rotate(45) translate(0, -135)">
-      <circle cx="0" cy="0" r="32" fill="#18181B" stroke="#D4AF37" stroke-width="2" />
-      <circle cx="0" cy="0" r="24" fill="#F8FAFC" />
-      <circle cx="0" cy="0" r="12" fill="#E11D48" />
-    </g>
-    <g transform="rotate(90) translate(0, -135)">
-      <rect x="-34" y="-20" width="68" height="40" rx="14" fill="#F8FAFC" />
-      <rect x="-36" y="-22" width="72" height="26" rx="10" fill="#E11D48" />
-      <line x1="-20" y1="-15" x2="20" y2="-5" stroke="#D4AF37" stroke-width="3" />
-    </g>
-    <g transform="rotate(135) translate(0, -135)">
-      <circle cx="0" cy="0" r="32" fill="#18181B" stroke="#D4AF37" stroke-width="2" />
-      <circle cx="0" cy="0" r="24" fill="#F8FAFC" />
-      <circle cx="0" cy="0" r="12" fill="#F59E0B" />
-    </g>
-    <g transform="rotate(180) translate(0, -135)">
-      <rect x="-34" y="-20" width="68" height="40" rx="14" fill="#F8FAFC" />
-      <rect x="-36" y="-22" width="72" height="26" rx="10" fill="#FB923C" />
-      <line x1="-20" y1="-15" x2="20" y2="-5" stroke="#D4AF37" stroke-width="3" />
-    </g>
-    <g transform="rotate(225) translate(0, -135)">
-      <circle cx="0" cy="0" r="32" fill="#18181B" stroke="#D4AF37" stroke-width="2" />
-      <circle cx="0" cy="0" r="24" fill="#F8FAFC" />
-      <circle cx="0" cy="0" r="12" fill="#22C55E" />
-    </g>
-    <g transform="rotate(270) translate(0, -135)">
-      <rect x="-34" y="-20" width="68" height="40" rx="14" fill="#F8FAFC" />
-      <rect x="-36" y="-22" width="72" height="26" rx="10" fill="#E11D48" />
-      <line x1="-20" y1="-15" x2="20" y2="-5" stroke="#D4AF37" stroke-width="3" />
-    </g>
-    <g transform="rotate(315) translate(0, -135)">
-      <circle cx="0" cy="0" r="32" fill="#18181B" stroke="#D4AF37" stroke-width="2" />
-      <circle cx="0" cy="0" r="24" fill="#F8FAFC" />
-      <circle cx="0" cy="0" r="12" fill="#F59E0B" />
-    </g>
+  <rect width="800" height="600" fill="#0D0E11" />
+  <rect x="20" y="20" width="760" height="560" rx="8" fill="#131519" stroke="#22242B" stroke-width="2" />
+  <g transform="translate(400, 280)" text-anchor="middle">
+    <circle cx="0" cy="-20" r="44" fill="#181A20" stroke="#2D3039" stroke-width="2" />
+    <path d="M-20,-20 L-12,-32 L12,-32 L20,-20 L28,-20 L28,-6 L-28,-6 L-28,-20 Z" fill="none" stroke="#D4AF37" stroke-width="2.5" />
+    <circle cx="0" cy="-14" r="9" fill="none" stroke="#D4AF37" stroke-width="2.5" />
+    <text y="65" fill="#F8FAFC" font-family="'Plus Jakarta Sans', sans-serif" font-size="22" font-weight="600">Tabla Nizumi (40 cortes y 2 bebidas)</text>
+    <text y="100" fill="#94A3B8" font-family="'JetBrains Mono', monospace" font-size="14">[COMPLETAR FOTO REAL · 4:3]</text>
   </g>
 </svg>

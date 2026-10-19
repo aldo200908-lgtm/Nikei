@@ -1,138 +1,157 @@
-import test from 'node:test';
-import assert from 'node:assert/strict';
+import { describe, it, expect } from 'vitest';
 import {
-  NIZUMI_MENU,
+  NIZUMI_MENU_DISHES,
+  PROMO_3X2_DISH,
   filterMenuByCategory,
   validateMakiBoardSelection,
   addToCart,
   updateCartItemQuantity,
   calculateCartSummary,
   validateCheckoutForm,
-  buildWhatsAppOrderUrl,
   buildWhatsAppOrderMessage,
+  buildWhatsAppOrderUrl,
   type CheckoutFormState,
-} from './orderLogic.ts';
+} from './orderLogic';
 
-test('filterMenuByCategory returns all 7 authentic Nizumi dishes for "all" and filters accurately', () => {
-  assert.equal(filterMenuByCategory(NIZUMI_MENU, 'all').length, 7);
-  assert.equal(filterMenuByCategory(NIZUMI_MENU, 'promos').length, 2);
-  assert.equal(filterMenuByCategory(NIZUMI_MENU, 'makis').length, 2);
-  assert.equal(filterMenuByCategory(NIZUMI_MENU, 'ramen').length, 1);
-  assert.equal(filterMenuByCategory(NIZUMI_MENU, 'caliente').length, 2);
-});
+describe('orderLogic tests', () => {
+  it('filterMenuByCategory filters dishes correctly and main dishes list excludes repeated promo 3x2', () => {
+    // Main dishes does not include promo 3x2 (promo 3x2 has its own section)
+    expect(NIZUMI_MENU_DISHES.find((d) => d.id === PROMO_3X2_DISH.id)).toBeUndefined();
+    expect(NIZUMI_MENU_DISHES.length).toBe(6);
 
-test('validateMakiBoardSelection enforces choosing exactly 3 valid maki flavors', () => {
-  const incomplete = validateMakiBoardSelection(['Acevichado', 'Furai']);
-  assert.equal(incomplete.valid, false);
-  assert.match(incomplete.message, /Selecciona 1 sabor más/);
+    const makis = filterMenuByCategory(NIZUMI_MENU_DISHES, 'makis');
+    expect(makis.length).toBe(2);
 
-  const complete = validateMakiBoardSelection([
-    'Acevichado',
-    'Pulpo al Olivo',
-    'Lomo Saltado',
-  ]);
-  assert.equal(complete.valid, true);
-});
+    const ramen = filterMenuByCategory(NIZUMI_MENU_DISHES, 'ramen');
+    expect(ramen.length).toBe(1);
 
-test('addToCart and calculateCartSummary compute S/ totals and pieces accurately', () => {
-  const promo3x2 = NIZUMI_MENU.find((d) => d.id === 'promo-martes-3x2')!;
-  const ramen = NIZUMI_MENU.find((d) => d.id === 'ramen-tonkotsu-caliente')!;
-
-  let cart = addToCart([], promo3x2, {
-    selectedFlavors: ['Acevichado', 'Furai', 'Avocado'],
-  });
-  cart = addToCart(cart, ramen, { proteinChoice: 'Cerdo Chashu' });
-
-  const summary = calculateCartSummary(cart);
-  assert.equal(summary.totalSoles, 88.0);
-  assert.equal(summary.formattedTotal, 'S/ 88.00');
-  assert.equal(summary.totalPieces, 31);
-  assert.equal(summary.totalDishes, 2);
-
-  // Incrementing promo quantity
-  cart = updateCartItemQuantity(cart, cart[0].cartItemId, 1);
-  const updatedSummary = calculateCartSummary(cart);
-  assert.equal(updatedSummary.totalSoles, 144.0);
-  assert.equal(updatedSummary.totalPieces, 61);
-});
-
-test('validateCheckoutForm enforces required fields per modality (delivery, pickup, reservation)', () => {
-  const promo3x2 = NIZUMI_MENU[0];
-  const cart = addToCart([], promo3x2, {
-    selectedFlavors: ['Acevichado', 'Furai', 'Lomo Saltado'],
+    const caliente = filterMenuByCategory(NIZUMI_MENU_DISHES, 'caliente');
+    expect(caliente.length).toBe(2);
   });
 
-  const baseForm: CheckoutFormState = {
-    customerName: 'Carlos Mamani',
-    customerPhone: '951234567',
-    modality: 'delivery',
-    deliveryAddress: '',
-    deliveryReference: '',
-    reservationTime: '20:00',
-    reservationGuests: 2,
-    chopsticksCount: 3,
-    extraSauceTare: true,
-    extraSauceSoya: false,
-    paymentMethod: 'Yape / Plin',
-    notes: '',
-  };
+  it('validateMakiBoardSelection enforces choosing exactly 3 valid flavors', () => {
+    const invalid = validateMakiBoardSelection(['Acevichado', 'Furai']);
+    expect(invalid.valid).toBe(false);
+    expect(invalid.message).toContain('Selecciona 1 sabor más');
 
-  // Delivery without address fails
-  const invalidDelivery = validateCheckoutForm(baseForm, cart);
-  assert.equal(invalidDelivery.valid, false);
-  assert.ok(invalidDelivery.errors.deliveryAddress);
-
-  // Delivery with address succeeds
-  const validDelivery = validateCheckoutForm(
-    { ...baseForm, deliveryAddress: 'Av. La Torre 340, Puno' },
-    cart
-  );
-  assert.equal(validDelivery.valid, true);
-
-  // Pickup without delivery address succeeds
-  const validPickup = validateCheckoutForm(
-    { ...baseForm, modality: 'pickup' },
-    cart
-  );
-  assert.equal(validPickup.valid, true);
-
-  // Reservation validates time and guests
-  const invalidReservation = validateCheckoutForm(
-    { ...baseForm, modality: 'reservation', reservationTime: '' },
-    cart
-  );
-  assert.equal(invalidReservation.valid, false);
-  assert.ok(invalidReservation.errors.reservationTime);
-});
-
-test('buildWhatsAppOrderUrl encodes structured order to real Nizumi Sushi Puno WhatsApp 51937377991', () => {
-  const promo3x2 = NIZUMI_MENU[0];
-  const cart = addToCart([], promo3x2, {
-    selectedFlavors: ['Acevichado', 'Pulpo al Olivo', 'Lomo Saltado'],
+    const valid = validateMakiBoardSelection([
+      'Acevichado',
+      'Pulpo al Olivo',
+      'Avocado',
+    ]);
+    expect(valid.valid).toBe(true);
+    expect(valid.message).toBe('30 cortes seleccionados.');
   });
 
-  const form: CheckoutFormState = {
-    customerName: 'Valeria Quispe',
-    customerPhone: '987654321',
-    modality: 'delivery',
-    deliveryAddress: 'Jr. Deustua 520, Puno',
-    deliveryReference: 'Frente a la Plaza Pino',
-    reservationTime: '19:30',
-    reservationGuests: 2,
-    chopsticksCount: 3,
-    extraSauceTare: true,
-    extraSauceSoya: true,
-    paymentMethod: 'Yape / Plin',
-    notes: 'Sin picante por favor',
-  };
+  it('addToCart and updateCartItemQuantity compute totals and pieces accurately', () => {
+    const acevichado = NIZUMI_MENU_DISHES.find((d) => d.id === 'maki-acevichado-nikkei')!;
+    const ramen = NIZUMI_MENU_DISHES.find((d) => d.id === 'ramen-tonkotsu-caliente')!;
 
-  const msg = buildWhatsAppOrderMessage(form, cart);
-  assert.match(msg, /Valeria Quispe/);
-  assert.match(msg, /Acevichado, Pulpo al Olivo, Lomo Saltado/);
-  assert.match(msg, /S\/ 56\.00/);
-  assert.match(msg, /3 par\(es\)/);
-  assert.match(msg, /Yape \/ Plin/);
+    let cart = addToCart([], acevichado);
+    cart = addToCart(cart, ramen, { proteinChoice: 'Cerdo' });
 
-  const url = buildWhatsAppOrderUrl(form, cart);
-  assert.ok(url.startsWith('https://wa.me/51937377991?text='));
+    const summary = calculateCartSummary(cart);
+    expect(summary.totalSoles).toBe(60.0);
+    expect(summary.formattedTotal).toBe('S/ 60.00');
+    expect(summary.totalPieces).toBe(11); // 10 cortes + 1 bowl
+    expect(summary.totalDishes).toBe(2);
+
+    // Quantity update
+    cart = updateCartItemQuantity(cart, cart[0].cartItemId, 1);
+    const updatedSummary = calculateCartSummary(cart);
+    expect(updatedSummary.totalSoles).toBe(88.0);
+    expect(updatedSummary.totalPieces).toBe(21);
+  });
+
+  it('reservation allows booking without items in the cart', () => {
+    const emptyCart: [] = [];
+    const validReservationForm: CheckoutFormState = {
+      customerName: 'Elena Quispe',
+      customerPhone: '951234567',
+      modality: 'reservation',
+      deliveryAddress: '',
+      deliveryReference: '',
+      reservationDate: '2026-10-25',
+      reservationTime: '19:30',
+      reservationGuests: 4,
+      chopsticksCount: 4,
+      extraSauceTare: false,
+      extraSauceSoya: false,
+      paymentMethod: 'Tarjeta',
+      notes: 'Mesa cerca a la ventana',
+    };
+
+    const result = validateCheckoutForm(validReservationForm, emptyCart);
+    expect(result.valid).toBe(true);
+    expect(result.errors).toEqual({});
+
+    const msg = buildWhatsAppOrderMessage(validReservationForm, emptyCart);
+    expect(msg).toContain('RESERVA DE MESA');
+    expect(msg).toContain('Elena Quispe');
+    expect(msg).toContain('Personas: 4');
+    expect(msg).toContain('Fecha: 2026-10-25');
+  });
+
+  it('delivery requires customer phone and address, and cart cannot be empty', () => {
+    const baseForm: CheckoutFormState = {
+      customerName: 'Carlos Mamani',
+      customerPhone: '',
+      modality: 'delivery',
+      deliveryAddress: '',
+      deliveryReference: '',
+      reservationDate: '',
+      reservationTime: '',
+      reservationGuests: 2,
+      chopsticksCount: 2,
+      extraSauceTare: true,
+      extraSauceSoya: false,
+      paymentMethod: 'Yape / Plin',
+      notes: 'Sin cebollita china',
+    };
+
+    // Empty cart fails
+    const emptyResult = validateCheckoutForm(baseForm, []);
+    expect(emptyResult.valid).toBe(false);
+    expect(emptyResult.errors.cart).toBeDefined();
+
+    // With cart but missing phone and address
+    const cart = addToCart([], NIZUMI_MENU_DISHES[0]);
+    const invalidResult = validateCheckoutForm(baseForm, cart);
+    expect(invalidResult.valid).toBe(false);
+    expect(invalidResult.errors.customerPhone).toContain('obligatorio para delivery');
+    expect(invalidResult.errors.deliveryAddress).toContain('dirección');
+
+    // Valid delivery
+    const validDelivery = validateCheckoutForm(
+      {
+        ...baseForm,
+        customerPhone: '951234567',
+        deliveryAddress: 'Jr. Deustua 520, Puno',
+      },
+      cart
+    );
+    expect(validDelivery.valid).toBe(true);
+  });
+
+  it('buildWhatsAppOrderUrl encodes direct wa.me link with 51937377991', () => {
+    const cart = addToCart([], NIZUMI_MENU_DISHES[0]);
+    const form: CheckoutFormState = {
+      customerName: 'Valeria',
+      customerPhone: '951234567',
+      modality: 'pickup',
+      deliveryAddress: '',
+      deliveryReference: '',
+      reservationDate: '',
+      reservationTime: '',
+      reservationGuests: 2,
+      chopsticksCount: 2,
+      extraSauceTare: true,
+      extraSauceSoya: true,
+      paymentMethod: 'Efectivo',
+      notes: '',
+    };
+
+    const url = buildWhatsAppOrderUrl(form, cart);
+    expect(url.startsWith('https://wa.me/51937377991?text=')).toBe(true);
+  });
 });

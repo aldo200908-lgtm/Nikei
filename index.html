@@ -4,16 +4,73 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nizumi Sushi – Cocina Nikkei &amp; Fusión | Puno, Perú</title>
-    <meta name="description" content="Alta cocina japonesa-peruana en el corazón de Puno. Tablas de makis de autor, ramen artesanal y pedidos directos por WhatsApp en Jr. Lima 439, 2do Piso." />
-    <meta property="og:title" content="Nizumi Sushi – Cocina Nikkei &amp; Fusión" />
-    <meta property="og:description" content="Alta cocina japonesa-peruana en el corazón de Puno. Tablas de makis de autor, ramen artesanal y pedidos directos por WhatsApp en Jr. Lima 439, 2do Piso." />
+    <meta name="description" content="Cocina nikkei y fusión en Jr. Lima 439, 2do Piso, Puno. Makis de autor, ramen caliente y atención directa por WhatsApp." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href="https://nizumi-sushi.vercel.app/" />
+
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
+    <meta property="og:title" content="Nizumi Sushi – Cocina Nikkei &amp; Fusión | Puno, Perú" />
+    <meta property="og:description" content="Cocina nikkei y fusión en Jr. Lima 439, 2do Piso, Puno. Makis de autor, ramen caliente y atención directa por WhatsApp." />
+    <meta property="og:image" content="/images/og-nizumi.svg" />
+    <meta property="og:url" content="https://nizumi-sushi.vercel.app/" />
+
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Nizumi Sushi – Cocina Nikkei &amp; Fusión" />
+    <meta name="twitter:description" content="Cocina nikkei y fusión en Jr. Lima 439, 2do Piso, Puno." />
+    <meta name="twitter:image" content="/images/og-nizumi.svg" />
+
+    <!-- Fonts: Cinzel strictly for brand and hero; Plus Jakarta Sans for UI and body -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- JSON-LD Structured Data: Restaurant -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Restaurant",
+      "name": "Nizumi Sushi",
+      "image": "https://nizumi-sushi.vercel.app/images/og-nizumi.jpg",
+      "@id": "https://nizumi-sushi.vercel.app/#restaurant",
+      "url": "https://nizumi-sushi.vercel.app/",
+      "telephone": "+51937377991",
+      "priceRange": "$$",
+      "servesCuisine": ["Nikkei", "Japanese", "Peruvian", "Sushi"],
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Jr. Lima 439, 2do Piso",
+        "addressLocality": "Puno",
+        "addressRegion": "Puno",
+        "addressCountry": "PE"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -15.8402,
+        "longitude": -70.0219
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
+          ],
+          "opens": "12:30",
+          "closes": "23:00"
+        }
+      ],
+      "acceptsReservations": "True"
+    }
+    </script>
   </head>
-  <body class="bg-[#0A0A0C] text-[#F8FAFC] antialiased selection:bg-[#E11D48] selection:text-white overflow-x-hidden">
+  <body class="bg-[#0D0E11] text-[#F8FAFC] antialiased selection:bg-[#E11D48] selection:text-white">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

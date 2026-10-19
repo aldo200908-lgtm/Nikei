@@ -1,57 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
-  <defs>
-    <radialGradient id="bgRamen" cx="50%" cy="50%" r="70%">
-      <stop offset="0%" stop-color="#231815" />
-      <stop offset="100%" stop-color="#0A0A0C" />
-    </radialGradient>
-    <radialGradient id="brothGrad" cx="45%" cy="45%" r="55%">
-      <stop offset="0%" stop-color="#F59E0B" />
-      <stop offset="65%" stop-color="#B45309" />
-      <stop offset="100%" stop-color="#78350F" />
-    </radialGradient>
-  </defs>
-  <rect width="800" height="600" fill="url(#bgRamen)" />
-
-  <!-- Matte Black Ceramic Ramen Bowl -->
-  <circle cx="400" cy="310" r="220" fill="#141417" stroke="#27272A" stroke-width="8" />
-  <circle cx="400" cy="310" r="196" fill="url(#brothGrad)" stroke="#E11D48" stroke-width="3" stroke-opacity="0.5" />
-
-  <!-- Nori Sheets tucked at top right -->
-  <polygon points="460,120 555,155 520,255 435,220" fill="#0F171A" stroke="#27272A" stroke-width="2" />
-  <polygon points="505,145 595,195 545,285 465,240" fill="#111C21" stroke="#27272A" stroke-width="2" />
-
-  <!-- Artisan Ramen Noodles -->
-  <g fill="none" stroke="#FDE047" stroke-width="6" stroke-linecap="round" opacity="0.85">
-    <path d="M260,330 Q340,280 420,335 T550,320" />
-    <path d="M250,355 Q335,305 415,360 T545,345" />
-    <path d="M270,380 Q350,330 430,385 T535,375" />
-    <path d="M295,405 Q365,365 445,410 T515,400" />
-  </g>
-
-  <!-- Charred Chashu Pork Slices -->
-  <g transform="translate(310, 235)">
-    <circle cx="0" cy="0" r="64" fill="#9A3412" stroke="#431407" stroke-width="6" />
-    <circle cx="0" cy="0" r="46" fill="#FDBA74" />
-    <path d="M-28,-10 A30,30 0 0,1 28,10" fill="none" stroke="#9A3412" stroke-width="8" />
-  </g>
-
-  <!-- Ajitsuke Soft Boiled Egg Halves -->
-  <g transform="translate(485, 260)">
-    <ellipse cx="0" cy="0" rx="46" ry="38" fill="#FEF3C7" stroke="#92400E" stroke-width="4" />
-    <circle cx="-4" cy="2" r="22" fill="#EA580C" />
-    <circle cx="-9" cy="-4" r="7" fill="#FDE047" opacity="0.7" />
-  </g>
-
-  <!-- Green Scallions & Chili Oil Drops -->
-  <g fill="#22C55E">
-    <circle cx="385" cy="310" r="9" />
-    <circle cx="408" cy="298" r="8" />
-    <circle cx="368" cy="328" r="7" />
-    <circle cx="422" cy="322" r="9" />
-  </g>
-  <g fill="#E11D48" opacity="0.8">
-    <circle cx="330" cy="395" r="7" />
-    <circle cx="350" cy="415" r="5" />
-    <circle cx="465" cy="390" r="8" />
+  <rect width="800" height="600" fill="#0D0E11" />
+  <rect x="20" y="20" width="760" height="560" rx="8" fill="#131519" stroke="#22242B" stroke-width="2" />
+  <g transform="translate(400, 280)" text-anchor="middle">
+    <circle cx="0" cy="-20" r="44" fill="#181A20" stroke="#2D3039" stroke-width="2" />
+    <path d="M-20,-20 L-12,-32 L12,-32 L20,-20 L28,-20 L28,-6 L-28,-6 L-28,-20 Z" fill="none" stroke="#D4AF37" stroke-width="2.5" />
+    <circle cx="0" cy="-14" r="9" fill="none" stroke="#D4AF37" stroke-width="2.5" />
+    <text y="65" fill="#F8FAFC" font-family="'Plus Jakarta Sans', sans-serif" font-size="22" font-weight="600">Ramen caliente</text>
+    <text y="100" fill="#94A3B8" font-family="'JetBrains Mono', monospace" font-size="14">[COMPLETAR FOTO REAL · 4:3]</text>
   </g>
 </svg>

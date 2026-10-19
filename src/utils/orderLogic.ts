@@ -1,4 +1,9 @@
-export type MenuCategoryId = 'all' | 'promos' | 'makis' | 'ramen' | 'caliente';
+import {
+  RESTAURANT,
+  getLimaStatus,
+} from '../constants/restaurant';
+
+export type MenuCategoryId = 'all' | 'tablas' | 'makis' | 'ramen' | 'caliente';
 
 export type MakiFlavor =
   | 'Acevichado'
@@ -9,9 +14,8 @@ export type MakiFlavor =
 
 export interface MakiFlavorInfo {
   id: MakiFlavor;
-  name: MakiFlavor;
-  shortDesc: string;
-  accentColor: string;
+  name: string;
+  description: string;
 }
 
 export interface MenuDish {
@@ -19,14 +23,12 @@ export interface MenuDish {
   name: string;
   category: Exclude<MenuCategoryId, 'all'>;
   categoryLabel: string;
-  kicker: string;
   description: string;
   price: number;
   pieces: number;
   unitLabel: string;
   imageUrl: string;
   isCustomizable3x2?: boolean;
-  featured?: boolean;
 }
 
 export interface CartItem {
@@ -38,7 +40,7 @@ export interface CartItem {
   unitLabel: string;
   quantity: number;
   selectedFlavors?: MakiFlavor[];
-  proteinChoice?: 'Cerdo Chashu' | 'Pollo Crocante';
+  proteinChoice?: 'Cerdo' | 'Pollo';
 }
 
 export type OrderModality = 'delivery' | 'pickup' | 'reservation';
@@ -50,6 +52,7 @@ export interface CheckoutFormState {
   modality: OrderModality;
   deliveryAddress: string;
   deliveryReference: string;
+  reservationDate: string;
   reservationTime: string;
   reservationGuests: number;
   chopsticksCount: number;
@@ -64,102 +67,90 @@ export interface ValidationResult {
   errors: Partial<Record<keyof CheckoutFormState | 'cart', string>>;
 }
 
-export const NIZUMI_WHATSAPP_NUMBER = '51937377991';
-export const NIZUMI_ADDRESS = 'Jr. Lima 439, 2do Piso, Puno, Perú';
-
 export const MAKI_3X2_FLAVORS: MakiFlavorInfo[] = [
   {
     id: 'Acevichado',
     name: 'Acevichado',
-    shortDesc: 'Langostino furai, palta, láminas de pescado fresco y emulsión acevichada cítrica.',
-    accentColor: '#D4AF37',
+    description: 'Langostino furai y palta, cubierto con pescado fresco y salsa acevichada.',
   },
   {
     id: 'Furai',
     name: 'Furai',
-    shortDesc: 'Empanizado crocante en panko japonés con salmón, queso crema, palta y salsa tare.',
-    accentColor: '#E11D48',
+    description: 'Empanizado en panko con salmón, queso crema, palta y salsa tare.',
   },
   {
     id: 'Pulpo al Olivo',
     name: 'Pulpo al Olivo',
-    shortDesc: 'Palta y queso crema coronado con láminas de pulpo en crema de aceituna botija.',
-    accentColor: '#A855F7',
+    description: 'Palta y queso crema con láminas de pulpo en crema de aceituna botija.',
   },
   {
     id: 'Lomo Saltado',
     name: 'Lomo Saltado',
-    shortDesc: 'Langostino y palta cubierto con lomo fino flambeado al wok, salsa anticuchera y papas hilo.',
-    accentColor: '#F97316',
+    description: 'Langostino y palta cubierto con lomo flambeado al wok y papas al hilo.',
   },
   {
     id: 'Avocado',
     name: 'Avocado',
-    shortDesc: 'Cobertura de palta cremosa sobre langostino empanizado, queso crema y ajonjolí tostado.',
-    accentColor: '#22C55E',
+    description: 'Palta cremosa sobre langostino empanizado, queso crema y ajonjolí.',
   },
 ];
 
-export const MENU_CATEGORIES: { id: MenuCategoryId; label: string; countLabel: string }[] = [
-  { id: 'all', label: 'Toda la Carta', countLabel: '7 especialidades' },
-  { id: 'promos', label: '🔥 Promos & Tablas', countLabel: '2 opciones' },
-  { id: 'makis', label: '🍣 Makis de Autor', countLabel: '2 opciones' },
-  { id: 'ramen', label: '🍜 Ramen para el Frío', countLabel: '1 especialidad' },
-  { id: 'caliente', label: '🥢 Cocina Caliente & Bowls', countLabel: '2 opciones' },
+export const MENU_CATEGORIES: { id: MenuCategoryId; label: string }[] = [
+  { id: 'all', label: 'Toda la carta' },
+  { id: 'tablas', label: 'Tablas' },
+  { id: 'makis', label: 'Makis de autor' },
+  { id: 'ramen', label: 'Ramen' },
+  { id: 'caliente', label: 'Cocina caliente y bowls' },
 ];
 
-export const NIZUMI_MENU: MenuDish[] = [
-  {
-    id: 'promo-martes-3x2',
-    name: 'Promo Martes 3x2 en Makis (30 cortes)',
-    category: 'promos',
-    categoryLabel: 'Promos & Tablas',
-    kicker: '30 CORTES · 3 ROLLOS A ELECCIÓN',
-    description:
-      'Arma tu tabla eligiendo tus 3 sabores favoritos de 10 cortes cada uno (Acevichado, Furai, Pulpo al Olivo, Lomo Saltado o Avocado). Incluye salsas acevichada, tare y soya.',
-    price: 56.0,
-    pieces: 30,
-    unitLabel: '30 cortes',
-    imageUrl: '/images/promo-3x2-makis.svg',
-    isCustomizable3x2: true,
-    featured: true,
-  },
+// Special promo 3x2 dish definition (rendered in its own dedicated section, NOT repeated in the main dishes grid)
+export const PROMO_3X2_DISH: MenuDish = {
+  id: 'promo-martes-3x2',
+  name: 'Promo Martes 3x2 en makis (30 cortes)',
+  category: 'tablas',
+  categoryLabel: 'Tablas',
+  description:
+    'Elige 3 rollos de 10 cortes cada uno (Acevichado, Furai, Pulpo al olivo, Lomo saltado o Avocado). Incluye salsas de la casa.',
+  price: 56.0,
+  pieces: 30,
+  unitLabel: '30 cortes',
+  imageUrl: '/images/promo-3x2-makis.svg',
+  isCustomizable3x2: true,
+};
+
+// Main restaurant dishes (without repeating promo 3x2)
+export const NIZUMI_MENU_DISHES: MenuDish[] = [
   {
     id: 'tabla-nizumi-imperial',
-    name: 'Tabla Nizumi Imperial (40 piezas + 2 Bebidas)',
-    category: 'promos',
-    categoryLabel: 'Promos & Tablas',
-    kicker: '40 PIEZAS + 2 BEBIDAS · SELECCIÓN DEL ITAMAE',
+    name: 'Tabla Nizumi (40 cortes y 2 bebidas)',
+    category: 'tablas',
+    categoryLabel: 'Tablas',
     description:
-      'Selección especial del Itamae con cortes flambeados en mesa, nigiris de autor, makis clásicos Nikkei y salsas artesanales de la casa más 2 bebidas.',
+      'Selección de la casa con cortes flambeados, nigiris y makis variados, acompañados de 2 bebidas.',
     price: 85.0,
     pieces: 40,
-    unitLabel: '40 piezas',
+    unitLabel: '40 cortes',
     imageUrl: '/images/tabla-imperial.svg',
-    featured: true,
   },
   {
     id: 'ramen-tonkotsu-caliente',
-    name: 'Ramen Tonkotsu / Pollo Caliente',
+    name: 'Ramen caliente',
     category: 'ramen',
-    categoryLabel: 'Ramen para el Frío',
-    kicker: 'CALDO 12 HORAS · ESPECIAL CLIMA DE PUNO',
+    categoryLabel: 'Ramen',
     description:
-      'Caldo concentrado por 12 horas, cerdo chashu o pollo tierno, huevo marinado ajitsuke de yema cremosa, alga nori y fideos artesanales, ideal para el frío altiplánico.',
+      'Caldo concentrado, fideos artesanales, huevo marinado ajitsuke y alga nori. Elige cerdo o pollo.',
     price: 32.0,
     pieces: 1,
-    unitLabel: '1 bowl caliente',
+    unitLabel: '1 bowl',
     imageUrl: '/images/ramen-tonkotsu.svg',
-    featured: true,
   },
   {
     id: 'maki-acevichado-nikkei',
-    name: 'Maki Acevichado Nikkei (10 cortes)',
+    name: 'Maki acevichado (10 cortes)',
     category: 'makis',
-    categoryLabel: 'Makis de Autor',
-    kicker: '10 CORTES · CLÁSICO INSUPERABLE',
+    categoryLabel: 'Makis de autor',
     description:
-      'Relleno de langostino furai crocante y palta en su punto, cubierto con láminas de atún y pescado fresco, bañado en salsa acevichada de la casa y togarashi.',
+      'Langostino furai y palta, cubierto con atún fresco, salsa acevichada de la casa y togarashi.',
     price: 28.0,
     pieces: 10,
     unitLabel: '10 cortes',
@@ -167,12 +158,11 @@ export const NIZUMI_MENU: MenuDish[] = [
   },
   {
     id: 'maki-pulpo-al-olivo',
-    name: 'Maki Pulpo al Olivo (10 cortes)',
+    name: 'Maki pulpo al olivo (10 cortes)',
     category: 'makis',
-    categoryLabel: 'Makis de Autor',
-    kicker: '10 CORTES · EMULSIÓN DE ACEITUNA BOTIJA',
+    categoryLabel: 'Makis de autor',
     description:
-      'Palta cremosa y queso philadelphia coronado con finas láminas de pulpo tierno bañadas en crema de aceituna botija peruana y láminas crocantes.',
+      'Palta y queso crema, cubierto con láminas de pulpo y crema de aceituna botija.',
     price: 30.0,
     pieces: 10,
     unitLabel: '10 cortes',
@@ -180,25 +170,23 @@ export const NIZUMI_MENU: MenuDish[] = [
   },
   {
     id: 'chicken-teriyaki-bowl',
-    name: 'Chicken Teriyaki Bowl',
+    name: 'Chicken teriyaki bowl',
     category: 'caliente',
-    categoryLabel: 'Cocina Caliente & Bowls',
-    kicker: 'COCINA CALIENTE · ARROZ GOHAN & PALTA',
+    categoryLabel: 'Cocina caliente y bowls',
     description:
-      'Pollo crocante glaseado en reducción de salsa teriyaki artesanal sobre cama de arroz gohan japonés, abanico de palta fresca y ajonjolí tostado.',
+      'Pollo crocante glaseado con salsa teriyaki sobre arroz gohan, palta y ajonjolí tostado.',
     price: 26.0,
     pieces: 1,
-    unitLabel: '1 donburi bowl',
+    unitLabel: '1 bowl',
     imageUrl: '/images/teriyaki-bowl.svg',
   },
   {
     id: 'tiradito-nikkei-aji-amarillo',
-    name: 'Tiradito Nikkei en Crema de Ají Amarillo',
+    name: 'Tiradito al ají amarillo (12 láminas)',
     category: 'caliente',
-    categoryLabel: 'Cocina Caliente & Bowls',
-    kicker: 'CORTES DE AUTOR · TOQUE CÍTRICO ORIENTAL',
+    categoryLabel: 'Cocina caliente y bowls',
     description:
-      'Cortes finos de pescado fresco con toque cítrico oriental, leche de tigre al ají amarillo ahumado, gotas de aceite de sésamo y cancha chullpi.',
+      'Cortes finos de pesca fresca en crema de ají amarillo con toque cítrico y cancha chullpi.',
     price: 34.0,
     pieces: 12,
     unitLabel: '12 láminas',
@@ -226,7 +214,7 @@ export function validateMakiBoardSelection(flavors: MakiFlavor[]): {
       message:
         remaining > 0
           ? `Selecciona ${remaining} sabor${remaining === 1 ? '' : 'es'} más para completar los 30 cortes.`
-          : 'Debes elegir exactamente 3 sabores de maki (10 cortes c/u).',
+          : 'Debes elegir exactamente 3 sabores (10 cortes cada uno).',
     };
   }
   for (const flavor of flavors) {
@@ -239,8 +227,13 @@ export function validateMakiBoardSelection(flavors: MakiFlavor[]): {
   }
   return {
     valid: true,
-    message: 'Tabla 3x2 completa (30 cortes listos para armar).',
+    message: '30 cortes seleccionados.',
   };
+}
+
+export function isPromo3x2Day(date: Date = new Date()): boolean {
+  const status = getLimaStatus(date);
+  return status.isTuesday;
 }
 
 export function buildCartItemKey(
@@ -252,7 +245,7 @@ export function buildCartItemKey(
     selectedFlavors && selectedFlavors.length > 0
       ? selectedFlavors.join('|')
       : 'standard';
-  const proteinKey = proteinChoice ? proteinChoice : 'default';
+  const proteinKey = proteinChoice || 'default';
   return `${dishId}::${flavorKey}::${proteinKey}`;
 }
 
@@ -261,7 +254,7 @@ export function addToCart(
   dish: MenuDish,
   options?: {
     selectedFlavors?: MakiFlavor[];
-    proteinChoice?: 'Cerdo Chashu' | 'Pollo Crocante';
+    proteinChoice?: 'Cerdo' | 'Pollo';
   }
 ): CartItem[] {
   const flavors = options?.selectedFlavors ? [...options.selectedFlavors] : undefined;
@@ -334,33 +327,65 @@ export function validateCheckoutForm(
   form: CheckoutFormState,
   cart: CartItem[]
 ): ValidationResult {
-  const errors: ValidationResult['errors'] = {};
-
-  if (!cart || cart.length === 0) {
-    errors.cart = 'Agrega al menos un plato o tabla Nikkei a tu pedido.';
-  }
+  const errors: Partial<Record<keyof CheckoutFormState | 'cart', string>> = {};
 
   if (!form.customerName || form.customerName.trim().length < 2) {
-    errors.customerName = 'Ingresa tu nombre para registrar el pedido.';
-  }
-
-  if (form.modality === 'delivery') {
-    if (!form.deliveryAddress || form.deliveryAddress.trim().length < 5) {
-      errors.deliveryAddress =
-        'Ingresa tu dirección exacta en Puno (Jr./Av. y número o referencia).';
-    }
+    errors.customerName = 'Ingresa tu nombre completo.';
   }
 
   if (form.modality === 'reservation') {
-    if (!form.reservationTime || form.reservationTime.trim().length === 0) {
-      errors.reservationTime = 'Selecciona la hora de tu reserva en el local.';
+    // A table reservation does NOT require dishes in cart!
+    if (!form.reservationDate || form.reservationDate.trim().length === 0) {
+      errors.reservationDate = 'Selecciona la fecha de la reserva.';
+    } else {
+      // Validate date is not past
+      const todayStr = new Date().toISOString().split('T')[0];
+      if (form.reservationDate < todayStr) {
+        errors.reservationDate = 'La fecha no puede ser anterior a hoy.';
+      }
     }
+
+    if (!form.reservationTime || form.reservationTime.trim().length === 0) {
+      errors.reservationTime = 'Selecciona la hora de la reserva.';
+    } else {
+      // Validate time within schedule
+      const [hStr, mStr] = form.reservationTime.split(':');
+      const h = parseInt(hStr, 10);
+      const m = parseInt(mStr || '0', 10);
+      const totalMin = h * 60 + m;
+      if (
+        isNaN(totalMin) ||
+        totalMin < RESTAURANT.schedule.openMinutes ||
+        totalMin > RESTAURANT.schedule.closeMinutes
+      ) {
+        errors.reservationTime = `El horario de atención es de ${RESTAURANT.schedule.hoursDisplay}.`;
+      }
+    }
+
     if (
       !Number.isInteger(form.reservationGuests) ||
-      form.reservationGuests < 1 ||
-      form.reservationGuests > 20
+      form.reservationGuests < RESTAURANT.reservationLimits.minGuests ||
+      form.reservationGuests > RESTAURANT.reservationLimits.maxGuests
     ) {
-      errors.reservationGuests = 'Indica un número válido de personas (1 a 20).';
+      errors.reservationGuests = `Indica entre ${RESTAURANT.reservationLimits.minGuests} y ${RESTAURANT.reservationLimits.maxGuests} personas.`;
+    }
+
+    if (!form.customerPhone || form.customerPhone.trim().length < 6) {
+      errors.customerPhone = 'Ingresa un teléfono para confirmar la reserva.';
+    }
+  } else {
+    // Delivery or Pickup: Cart must NOT be empty
+    if (!cart || cart.length === 0) {
+      errors.cart = 'Agrega al menos un plato a tu pedido.';
+    }
+
+    if (form.modality === 'delivery') {
+      if (!form.customerPhone || form.customerPhone.trim().length < 6) {
+        errors.customerPhone = 'El teléfono es obligatorio para delivery.';
+      }
+      if (!form.deliveryAddress || form.deliveryAddress.trim().length < 5) {
+        errors.deliveryAddress = 'Ingresa tu dirección exacta en Puno.';
+      }
     }
   }
 
@@ -375,73 +400,87 @@ export function buildWhatsAppOrderMessage(
   cart: CartItem[]
 ): string {
   const summary = calculateCartSummary(cart);
-  const modalityHeader =
-    form.modality === 'delivery'
-      ? '🛵 *MODALIDAD: DELIVERY EN PUNO*'
-      : form.modality === 'pickup'
-      ? '🥢 *MODALIDAD: RECOJO EN LOCAL (Jr. Lima 439, 2do Piso)*'
-      : '🥂 *MODALIDAD: RESERVA DE MESA EN EL LOCAL*';
 
-  const lines: string[] = [
-    '🍣 *NUEVO PEDIDO — NIZUMI SUSHI PUNO*',
-    '────────────────────',
-    `👤 *Cliente:* ${form.customerName.trim()}`,
-  ];
+  if (form.modality === 'reservation') {
+    const lines: string[] = [
+      `*RESERVA DE MESA — ${RESTAURANT.name.toUpperCase()}*`,
+      `Cliente: ${form.customerName.trim()}`,
+      `Teléfono: ${form.customerPhone.trim()}`,
+      `Fecha: ${form.reservationDate.trim()}`,
+      `Hora: ${form.reservationTime.trim()}`,
+      `Personas: ${form.reservationGuests}`,
+      `Local: ${RESTAURANT.address}`,
+    ];
 
-  if (form.customerPhone && form.customerPhone.trim()) {
-    lines.push(`📱 *Teléfono:* ${form.customerPhone.trim()}`);
+    if (cart.length > 0) {
+      lines.push('');
+      lines.push('Platos pre-seleccionados:');
+      cart.forEach((item, index) => {
+        lines.push(`${index + 1}. ${item.quantity}x ${item.name} (${formatSoles(item.price * item.quantity)})`);
+        if (item.selectedFlavors && item.selectedFlavors.length > 0) {
+          lines.push(`   Sabores: ${item.selectedFlavors.join(', ')}`);
+        }
+      });
+      lines.push(`Total estimado: ${summary.formattedTotal}`);
+    }
+
+    if (form.notes && form.notes.trim()) {
+      lines.push('');
+      lines.push(`Notas / alergias: ${form.notes.trim()}`);
+    }
+
+    return lines.join('\n');
   }
 
-  lines.push(modalityHeader);
+  // Delivery or Pickup
+  const modalityTitle =
+    form.modality === 'delivery'
+      ? 'DELIVERY EN PUNO'
+      : `RECOJO EN LOCAL (${RESTAURANT.address})`;
+
+  const lines: string[] = [
+    `*PEDIDO — ${RESTAURANT.name.toUpperCase()}*`,
+    `Cliente: ${form.customerName.trim()}`,
+    `Teléfono: ${form.customerPhone.trim() || 'No especificado'}`,
+    `Modalidad: ${modalityTitle}`,
+  ];
 
   if (form.modality === 'delivery') {
-    lines.push(`📍 *Dirección:* ${form.deliveryAddress.trim()}`);
+    lines.push(`Dirección: ${form.deliveryAddress.trim()}`);
     if (form.deliveryReference && form.deliveryReference.trim()) {
-      lines.push(`🗺️ *Referencia:* ${form.deliveryReference.trim()}`);
+      lines.push(`Referencia: ${form.deliveryReference.trim()}`);
     }
-  } else if (form.modality === 'pickup') {
-    lines.push(`📍 *Punto de Recojo:* ${NIZUMI_ADDRESS}`);
-  } else if (form.modality === 'reservation') {
-    lines.push(`🕒 *Hora solicitada:* ${form.reservationTime.trim()}`);
-    lines.push(`👥 *Comensales:* ${form.reservationGuests} persona(s)`);
-    lines.push(`📍 *Ubicación:* ${NIZUMI_ADDRESS}`);
   }
 
   lines.push('');
-  lines.push('*DETALLE DEL PEDIDO:*');
-
+  lines.push('Detalle del pedido:');
   cart.forEach((item, index) => {
     const lineTotal = formatSoles(item.price * item.quantity);
-    lines.push(`${index + 1}. *${item.quantity}x ${item.name}* — ${lineTotal}`);
+    lines.push(`${index + 1}. ${item.quantity}x ${item.name} — ${lineTotal}`);
     if (item.selectedFlavors && item.selectedFlavors.length > 0) {
-      lines.push(
-        `   • Sabores 3x2 (10 cortes c/u): ${item.selectedFlavors.join(', ')}`
-      );
+      lines.push(`   Sabores: ${item.selectedFlavors.join(', ')}`);
     }
     if (item.proteinChoice) {
-      lines.push(`   • Proteína: ${item.proteinChoice}`);
+      lines.push(`   Proteína: ${item.proteinChoice}`);
     }
   });
 
   lines.push('');
-  lines.push('*COMPLEMENTOS & UTENSILIOS:*');
-  lines.push(`🥢 *Palillos (Hashi):* ${form.chopsticksCount} par(es)`);
-
-  const extraSauces: string[] = [];
-  if (form.extraSauceTare) extraSauces.push('Salsa Tare Extra');
-  if (form.extraSauceSoya) extraSauces.push('Salsa Soya Extra');
-  lines.push(
-    `🍶 *Salsas extra:* ${extraSauces.length > 0 ? extraSauces.join(' + ') : 'Estándar de la casa'}`
-  );
-
-  lines.push(`💳 *Método de Pago:* ${form.paymentMethod}`);
+  lines.push(`Palillos (hashi): ${form.chopsticksCount} par(es)`);
+  const extras: string[] = [];
+  if (form.extraSauceTare) extras.push('Tare extra');
+  if (form.extraSauceSoya) extras.push('Soya extra');
+  if (extras.length > 0) {
+    lines.push(`Salsas adicionales: ${extras.join(', ')}`);
+  }
+  lines.push(`Método de pago: ${form.paymentMethod}`);
 
   if (form.notes && form.notes.trim()) {
-    lines.push(`📝 *Nota:* ${form.notes.trim()}`);
+    lines.push(`Notas / alergias: ${form.notes.trim()}`);
   }
 
-  lines.push('────────────────────');
-  lines.push(`🔥 *TOTAL A PAGAR: ${summary.formattedTotal}* (${summary.totalPieces} piezas/unidades)`);
+  lines.push('');
+  lines.push(`Total: ${summary.formattedTotal} (${summary.totalPieces} piezas/unidades)`);
 
   return lines.join('\n');
 }
@@ -451,5 +490,29 @@ export function buildWhatsAppOrderUrl(
   cart: CartItem[]
 ): string {
   const message = buildWhatsAppOrderMessage(form, cart);
-  return `https://wa.me/${NIZUMI_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+  return `https://wa.me/${RESTAURANT.phoneRaw}?text=${encodeURIComponent(message)}`;
+}
+
+// LocalStorage persistence helpers
+const CART_STORAGE_KEY = 'nizumi_cart_v1';
+
+export function loadCartFromStorage(): CartItem[] {
+  if (typeof window === 'undefined') return [];
+  try {
+    const raw = localStorage.getItem(CART_STORAGE_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+export function saveCartToStorage(cart: CartItem[]): void {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+  } catch {
+    // Ignore storage quota errors
+  }
 }

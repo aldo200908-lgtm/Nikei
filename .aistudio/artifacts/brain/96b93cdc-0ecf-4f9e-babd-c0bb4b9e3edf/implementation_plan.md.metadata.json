@@ -1,6 +1,0 @@
-{
-  "summary": "Plan de solución para habilitar el preview en vivo de Nizumi Sushi en AI Studio configurando server.allowedHosts en Vite, habilitando CORS y asegurando la visibilidad inmediata sin bloqueos de iframe.",
-  "updatedAt": "2026-10-19T02:35:03.991280782Z",
-  "requestFeedback": true,
-  "userFacing": true
-}
